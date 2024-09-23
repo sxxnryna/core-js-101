@@ -34,7 +34,7 @@ function getFactorial(n) {
   if (n < 0) return undefined; // Factorial is not defined for negative numbers
   if (n === 0 || n === 1) return 1; // Base case: 0! and 1! are both 1
   let result = 1;
-  for (let i = 2; i <= n; i=i+1) {
+  for (let i = 2; i <= n; i += 1) {
     result *= i;
   }
   return result;
@@ -54,7 +54,7 @@ function getFactorial(n) {
  */
 function getSumBetweenNumbers(n1, n2) {
   let sum = 0;
-  for (let i = n1; i <= n2; i=i+1) {
+  for (let i = n1; i <= n2; i += 1) {
     sum += i;
   }
   return sum;
@@ -115,16 +115,16 @@ function isTriangle(a, b, c) {
 function doRectanglesOverlap(rect1, rect2) {
   // Check if one rectangle is to the left of the other
   if (
-    rect1.left + rect1.width <= rect2.left ||
-    rect2.left + rect2.width <= rect1.left
+    rect1.left + rect1.width <= rect2.left
+    || rect2.left + rect2.width <= rect1.left
   ) {
     return false;
   }
 
   // Check if one rectangle is above the other
   if (
-    rect1.top + rect1.height <= rect2.top ||
-    rect2.top + rect2.height <= rect1.top
+    rect1.top + rect1.height <= rect2.top
+    || rect2.top + rect2.height <= rect1.top
   ) {
     return false;
   }
@@ -160,8 +160,7 @@ function doRectanglesOverlap(rect1, rect2) {
  */
 function isInsideCircle(circle, point) {
   // Calculate the distance squared from the point to the circle's center
-  const distanceSquared =
-    (point.x - circle.center.x) ** 2 + (point.y - circle.center.y) ** 2;
+  const distanceSquared = (point.x - circle.center.x) ** 2 + (point.y - circle.center.y) ** 2;
 
   // Compare the distance squared to the radius squared
   return distanceSquared < circle.radius ** 2;
@@ -294,7 +293,7 @@ function isCreditCardNumber(ccn) {
   const isEven = nDigits % 2 === 0;
 
   // Loop through each digit from right to left
-  for (let i = 0; i < nDigits; i=i+1) {
+  for (let i = 0; i < nDigits; i += 1) {
     let digit = parseInt(str[i], 10);
 
     // Double every second digit
@@ -446,12 +445,12 @@ function getCommonDirectoryPath(pathes) {
   let commonPath = '';
 
   // Iterate over the parts of the first path
-  for (let i = 0; i < parts.length; i=i+1) {
+  for (let i = 0; i < parts.length; i += 1) {
     const part = parts[i];
 
     // Check if all other paths have the same part
     if (pathes.every((path) => path.split('/')[i] === part)) {
-      commonPath += part + '/'; // Append to commonPath
+      commonPath += `${part}/`; // Append to commonPath
     } else {
       break; // Stop if a mismatch is found
     }
@@ -493,9 +492,9 @@ function getMatrixProduct(m1, m2) {
   const result = Array.from({ length: rowsA }, () => Array(colsB).fill(0));
 
   // Perform matrix multiplication
-  for (let i = 0; i < rowsA; i=i+1) {
-    for (let j = 0; j < colsB; j=j+1) {
-      for (let k = 0; k < colsA; k=k+1) {
+  for (let i = 0; i < rowsA; i += 1) {
+    for (let j = 0; j < colsB; j += 1) {
+      for (let k = 0; k < colsA; k += 1) {
         result[i][j] += m1[i][k] * m2[k][j];
       }
     }
@@ -536,26 +535,22 @@ function getMatrixProduct(m1, m2) {
  */
 function evaluateTicTacToePosition(position) {
   // Check rows
-  for (let i = 0; i < 3; i=i+1) {
+  for (let i = 0; i < 3; i += 1) {
     if (
-      position[i][0] 
-      &&
-      position[i][0] === position[i][1] 
-      &&
-      position[i][1] === position[i][2]
+      position[i][0]
+      && position[i][0] === position[i][1]
+      && position[i][1] === position[i][2]
     ) {
       return position[i][0]; // Return 'X' or '0' if found
     }
   }
 
   // Check columns
-  for (let j = 0; j < 3; j=j+1) {
+  for (let j = 0; j < 3; j += 1) {
     if (
-      position[0][j] 
-      &&
-      position[0][j] === position[1][j] 
-      &&
-      position[1][j] === position[2][j]
+      position[0][j]
+      && position[0][j] === position[1][j]
+      && position[1][j] === position[2][j]
     ) {
       return position[0][j]; // Return 'X' or '0' if found
     }
@@ -563,21 +558,17 @@ function evaluateTicTacToePosition(position) {
 
   // Check diagonals
   if (
-    position[0][0] 
-    &&
-    position[0][0] === position[1][1] 
-    &&
-    position[1][1] === position[2][2]
+    position[0][0]
+    && position[0][0] === position[1][1]
+    && position[1][1] === position[2][2]
   ) {
     return position[0][0]; // Return 'X' or '0' if found
   }
 
   if (
-    position[0][2] 
-    &&
-    position[0][2] === position[1][1] 
-    &&
-    position[1][1] === position[2][0]
+    position[0][2]
+    && position[0][2] === position[1][1]
+    && position[1][1] === position[2][0]
   ) {
     return position[0][2]; // Return 'X' or '0' if found
   }
