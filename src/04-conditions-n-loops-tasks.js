@@ -181,19 +181,12 @@ function findFirstSingleChar(str) {
   const charCount = {};
 
   // Count the occurrences of each character
-  for (const char of str) {
+  str.split('').forEach((char) => {
     charCount[char] = (charCount[char] || 0) + 1;
-  }
+  });
 
   // Find the first character that appears only once
-  for (const char of str) {
-    if (charCount[char] === 1) {
-      return char;
-    }
-  }
-
-  // Return null if no non-repeated character is found
-  return null;
+  return str.split('').find((char) => charCount[char] === 1) || null;
 }
 
 /**
@@ -327,14 +320,18 @@ function isCreditCardNumber(ccn) {
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
  */
 function getDigitalRoot(num) {
-  while (num > 9) {
-    num = num
+  let number = num; // Создаём новую переменную
+
+  while (number > 9) {
+    number = number
       .toString()
       .split('')
       .reduce((acc, digit) => acc + parseInt(digit, 10), 0);
   }
-  return num;
+
+  return number;
 }
+
 
 /**
  * Returns true if the specified string has the balanced brackets and false otherwise.
@@ -358,7 +355,6 @@ function getDigitalRoot(num) {
  *   '{[(<{[]}>)]}' = true
  */
 function isBracketsBalanced(str) {
-  const stack = [];
   const bracketsMap = {
     '(': ')',
     '{': '}',
@@ -366,23 +362,20 @@ function isBracketsBalanced(str) {
     '<': '>',
   };
 
-  for (const char of str) {
-    // If it's an opening bracket, push it onto the stack
+  const balanced = str.split('').reduce((acc, char) => {
     if (bracketsMap[char]) {
-      stack.push(char);
-    }
-    // If it's a closing bracket, check for balance
-    else if (Object.values(bracketsMap).includes(char)) {
-      // If stack is empty or the last opened bracket doesn't match
-      if (!stack.length || bracketsMap[stack.pop()] !== char) {
-        return false;
+      acc.push(char); // Push opening brackets
+    } else if (Object.values(bracketsMap).includes(char)) {
+      if (!acc.length || bracketsMap[acc.pop()] !== char) {
+        acc.isBalanced = false; // Mark as unbalanced
       }
     }
-  }
+    return acc;
+  }, { stack: [], isBalanced: true });
 
-  // If stack is empty, all brackets were balanced
-  return stack.length === 0;
+  return balanced.isBalanced && balanced.stack.length === 0; // Check if balanced
 }
+
 
 /**
  * Returns the string with n-ary (binary, ternary, etc, where n <= 10)
@@ -414,15 +407,19 @@ function toNaryString(num, n) {
   // Handle the case for 0 explicitly
   if (num === 0) return '0';
 
+  // Use a new variable to store the updated value
+  let value = num;
+
   // Convert to n-ary
-  while (num > 0) {
-    const remainder = num % n;
+  while (value > 0) {
+    const remainder = value % n;
     result = remainder.toString() + result; // Prepend the remainder
-    num = Math.floor(num / n); // Update num
+    value = Math.floor(value / n); // Update value
   }
 
   return result;
 }
+
 
 /**
  * Returns the common directory path for specified array of full filenames.
